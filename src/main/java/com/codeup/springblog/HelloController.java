@@ -5,20 +5,20 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HelloController {
+
     @GetMapping("/hello")
     @ResponseBody
     public String hello(){
-        return "Hello there from Spring!";
+
+        return "Hello there from the Sirius cohort! We're already loving Spring!";
     }
 
-    @RequestMapping(path = "/hello/{name}/and/{age}", method = RequestMethod.GET)
+    @RequestMapping(path= "/hello/{name}/and/{age}", method = RequestMethod.GET)
     @ResponseBody
     public String helloNameAge(@PathVariable String name, @PathVariable int age){
-        return "Hey there, user! You said your name was " + name + " and you indicated you were " + age + " years old!";
+
+
+
+        return "Hey user! Thanks for letting me know your name is " + name + ". You also told me you were " + age + " years old.";
     }
-
-
-
 }
-
-

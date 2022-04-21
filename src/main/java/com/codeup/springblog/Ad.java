@@ -16,6 +16,9 @@ public class Ad {
     @Column(nullable = false) //Not null. . no other customization
     private String description;
 
+    @OneToOne
+    private User owner;
+
     public String getTitle() {
         return title;
     }

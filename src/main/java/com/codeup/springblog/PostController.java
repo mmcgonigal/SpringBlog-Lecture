@@ -2,15 +2,18 @@ package com.codeup.springblog;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @Controller
 public class PostController {
+
+        private final PostRepository postDao;
+
+        public PostController(PostRepository postDao) {
+                this.postDao = postDao;
+        }
 
         @GetMapping("/posts")
         public String postsIndex(Model model){
@@ -31,17 +34,20 @@ public class PostController {
             return "posts/show";
         }
 
-        @GetMapping("/posts/create/")
-        @ResponseBody
-        public String postCreate(){
-
-            return "Form for creating a post - pardon our dust!";
+        @GetMapping("/posts/create")
+        public String postCreate(Model model){
+        model.addAttribute("newPost", new Post());
+            return "posts/create";
         }
 
         @PostMapping("/posts/create")
-        @ResponseBody
-        public String submitPost(){
-                return "create a new post";
+        public String submitPost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body){
+
+                System.out.println("Title:" + title + " and the body was: " + body);
+
+                postDao.save(new Post(title, body));
+
+                return "redirect:/posts";
         }
 
 }

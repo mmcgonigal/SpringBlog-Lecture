@@ -3,6 +3,8 @@ package com.codeup.springblog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdController {
@@ -12,7 +14,7 @@ public class AdController {
         this.adDao = adDao;
     }
 
-    @GetMapping("/ad")
+    @GetMapping("/ads")
     public String getAd(Model model){
 
 
@@ -22,7 +24,7 @@ public class AdController {
         return "adPage";
     }
 
-    @GetMapping("/ad/single")
+    @GetMapping("/ads/single")
     public String getSingleAd(Model model){
 
 
@@ -30,5 +32,24 @@ public class AdController {
 
 
         return "singleAdPage";
+    }
+
+
+    @GetMapping("/ads/create")
+    public String showCreateForm() {
+        return "createAD";
+    }
+
+    @PostMapping("/ads/create")
+    public String create(
+            @RequestParam(name = "title") String title,
+            @RequestParam(name = "description") String description
+    ) {
+        Ad ad = new Ad();
+        ad.setTitle(title);
+        ad.setDescription(description);
+        // save the ad...
+
+        return "redirect:/ads";
     }
 }

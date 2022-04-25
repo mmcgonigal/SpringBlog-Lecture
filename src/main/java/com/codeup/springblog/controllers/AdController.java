@@ -1,18 +1,25 @@
-package com.codeup.springblog;
+package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.repositories.AdRepository;
+import com.codeup.springblog.repositories.UserRepository;
+import com.codeup.springblog.models.Ad;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdController {
     private final AdRepository adDao;
+    private final EmailService emailService;
+    private final UserRepository userDao;
 
-    public AdController(AdRepository adDao){
+    public AdController(AdRepository adDao, UserRepository userDao, EmailService emailService){
         this.adDao = adDao;
+        this.userDao = userDao;
+        this.emailService = emailService;
     }
 
     @GetMapping("/ads")
